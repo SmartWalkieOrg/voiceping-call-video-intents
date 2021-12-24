@@ -13,11 +13,13 @@ import com.smartwalkietalkie.gantry.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var vpReceiver: VoicePingBroadcastReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        vpReceiver = VoicePingBroadcastReceiver()
         showAppropriateLayout(Layout.INIT_CALL)
         binding.buttonCall.setOnClickListener {
             val userId = binding.editUserId.text.toString()
@@ -39,7 +41,12 @@ class MainActivity : AppCompatActivity() {
         binding.buttonEnd.setOnClickListener {
             showAppropriateLayout(Layout.INIT_CALL)
         }
-        initReceiver()
+        registerReceiver(vpReceiver, VoicePingBroadcastReceiver.generateIntentFilter())
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(vpReceiver)
     }
 
     private fun showAppropriateLayout(layout: Layout) {
@@ -54,17 +61,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
-
-    private fun initReceiver() {
-        val filter = IntentFilter()
-        filter.addAction("INCOMING_CALL")
-        val updateUIReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context, intent: Intent) {
-                val userId = intent.getIntExtra(EXTRAS_USER_ID, -1)
-            }
-        }
-        registerReceiver(updateUIReceiver, filter)
     }
 
     companion object {
