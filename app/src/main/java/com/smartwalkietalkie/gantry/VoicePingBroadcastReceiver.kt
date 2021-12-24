@@ -6,30 +6,20 @@ import android.content.Intent
 import android.content.IntentFilter
 import timber.log.Timber
 
-class VoicePingBroadcastReceiver : BroadcastReceiver() {
+class VoicePingBroadcastReceiver(val listener: Listener) : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         if (context == null || intent == null) return
         if (intent.action != INTENT_ACTION) return
         val callType = intent.getStringExtra(KEY_CALL_TYPE) ?: ""
-        val callEvent = intent.getStringExtra(KEY_CALL_EVENT) ?: ""
-        if (callType.isBlank() || callEvent.isBlank()) return
-        Timber.d("onReceive, callType: $callType, callEvent: $callEvent")
+        val callState = intent.getStringExtra(KEY_CALL_EVENT) ?: ""
+        if (callType.isBlank() || callState.isBlank()) return
+        Timber.d("onReceive, callType: $callType, callState: $callState")
+        listener.onCallEvent(CallEvent(callType, callState))
     }
 
-    object CallType {
-        const val OUTGOING = "outgoing"
-        const val INCOMING = "incoming"
-    }
-
-    object CallEvent {
-        const val CALL_INITIATED = "call_initiated"
-        const val CALL_RECEIVED = "call_received"
-        const val CALL_ANSWERED = "call_answered"
-        const val CALL_CANCELLED = "call_cancelled"
-        const val CALL_REJECTED = "call_rejected"
-        const val CALL_ESTABLISHED = "call_established"
-        const val CALL_ENDED = "call_ended"
+    interface Listener {
+        fun onCallEvent(callEvent: CallEvent)
     }
 
     companion object {

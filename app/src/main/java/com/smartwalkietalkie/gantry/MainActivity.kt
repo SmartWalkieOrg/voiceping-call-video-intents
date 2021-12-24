@@ -1,17 +1,12 @@
 package com.smartwalkietalkie.gantry
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.smartwalkietalkie.gantry.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), VoicePingBroadcastReceiver.Listener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var vpReceiver: VoicePingBroadcastReceiver
 
@@ -19,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        vpReceiver = VoicePingBroadcastReceiver()
+        vpReceiver = VoicePingBroadcastReceiver(this)
         showAppropriateLayout(Layout.INIT_CALL)
         binding.buttonCall.setOnClickListener {
             val userId = binding.editUserId.text.toString()
@@ -63,8 +58,16 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    companion object {
-        const val EXTRAS_USER_ID = "user_id"
+    override fun onCallEvent(callEvent: CallEvent) {
+        runOnUiThread {
+            val layout = when (callEvent.state) {
+                CallEvent.State.CALL_INITIATED -> Layout.CALLING
+                CallEvent.State.CALL_RECEIVED -> Layout.INCOMING_CALL
+                CallEvent.State.CALL_ESTABLISHED -> Layout.CALL_ESTABLISHED
+                else -> Layout.INIT_CALL
+            }
+            showAppropriateLayout(layout)
+        }
     }
 
     enum class Layout {
