@@ -6,7 +6,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import timber.log.Timber
 
-class VoicePingBroadcastReceiver(val listener: Listener) : BroadcastReceiver() {
+class VoicePingBroadcastReceiver(private val listener: Listener) : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         if (context == null || intent == null) return

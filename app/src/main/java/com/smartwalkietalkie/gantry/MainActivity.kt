@@ -9,12 +9,14 @@ import com.smartwalkietalkie.gantry.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity(), VoicePingBroadcastReceiver.Listener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var vpReceiver: VoicePingBroadcastReceiver
+    private lateinit var vpSender: VoicePingBroadcastSender
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         vpReceiver = VoicePingBroadcastReceiver(this)
+        vpSender = VoicePingBroadcastSender(this)
         showAppropriateLayout(Layout.INIT_CALL)
         binding.buttonCall.setOnClickListener {
             val userId = binding.editUserId.text.toString()
@@ -23,18 +25,26 @@ class MainActivity : AppCompatActivity(), VoicePingBroadcastReceiver.Listener {
                 binding.editUserId.requestFocus()
                 return@setOnClickListener
             }
-            showToast("Calling: $userId")
-            showAppropriateLayout(Layout.CALLING)
+            val intUserId = userId.toIntOrNull() ?: 0
+            if (intUserId < 1) {
+                binding.editUserId.error = "Invalid ID!"
+                binding.editUserId.requestFocus()
+                return@setOnClickListener
+            }
+            showToast("Calling: $intUserId")
+            vpSender.initiateCall(intUserId)
         }
-        binding.buttonCancel.setOnClickListener { showAppropriateLayout(Layout.INCOMING_CALL) }
+        binding.buttonCancel.setOnClickListener {
+            vpSender.endCall()
+        }
         binding.buttonAnswer.setOnClickListener {
-            showAppropriateLayout(Layout.CALL_ESTABLISHED)
+            vpSender.answerCall()
         }
         binding.buttonReject.setOnClickListener {
-            showAppropriateLayout(Layout.INIT_CALL)
+            vpSender.endCall()
         }
         binding.buttonEnd.setOnClickListener {
-            showAppropriateLayout(Layout.INIT_CALL)
+            vpSender.endCall()
         }
         registerReceiver(vpReceiver, VoicePingBroadcastReceiver.generateIntentFilter())
     }
