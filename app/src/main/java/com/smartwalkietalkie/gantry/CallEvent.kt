@@ -1,11 +1,6 @@
 package com.smartwalkietalkie.gantry
 
-class CallEvent(val type: String, val state: String) {
-
-    object Type {
-        const val OUTGOING = "outgoing"
-        const val INCOMING = "incoming"
-    }
+class CallEvent(val state: String, val userId: Int) {
 
     object State {
         const val CALL_INITIATED = "call_initiated"

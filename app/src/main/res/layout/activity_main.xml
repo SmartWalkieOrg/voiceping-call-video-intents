@@ -28,7 +28,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/layout_calling"
+        android:id="@+id/layout_on_call"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
@@ -36,48 +36,27 @@
         android:padding="16dp">
 
         <TextView
+            android:id="@+id/text_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Calling..."
+            android:text="Status"
             android:textColor="@color/black"
             android:textSize="24sp" />
 
         <TextView
+            android:id="@+id/text_user_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="username"
+            android:layout_marginBottom="32dp"
+            android:text="User ID"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/button_cancel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Cancel" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layout_incoming_call"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Incoming Call"
-            android:textColor="@color/black"
-            android:textSize="24sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="username"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
 
         <Button
             android:id="@+id/button_answer"
@@ -91,57 +70,10 @@
             android:layout_height="wrap_content"
             android:text="Reject" />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layout_establishing_call"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Establishing call..."
-            android:textColor="@color/black"
-            android:textSize="24sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Please wait"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
-
         <ProgressBar
+            android:id="@+id/progress_circular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layout_call_established"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Call Established"
-            android:textColor="@color/black"
-            android:textSize="24sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="username"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
 
         <Button
             android:id="@+id/button_end"

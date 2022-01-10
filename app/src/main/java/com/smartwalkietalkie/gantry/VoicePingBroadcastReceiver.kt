@@ -10,13 +10,12 @@ class VoicePingBroadcastReceiver(private val listener: Listener) : BroadcastRece
 
     override fun onReceive(context: Context?, intent: Intent?) {
         if (context == null || intent == null) return
-        Timber.d("onReceive, intent: $intent")
         if (intent.action != INTENT_ACTION) return
-        val callType = intent.getStringExtra(KEY_CALL_TYPE) ?: ""
-        val callState = intent.getStringExtra(KEY_CALL_EVENT) ?: ""
-        if (callType.isBlank() || callState.isBlank()) return
-        Timber.d("onReceive, callType: $callType, callState: $callState")
-        listener.onCallEvent(CallEvent(callType, callState))
+        val callState = intent.getStringExtra(KEY_CALL_STATE) ?: ""
+        if (callState.isBlank()) return
+        val userId = intent.getIntExtra(KEY_USER_ID, 0)
+        Timber.d("onReceive, callState: $callState, userId: $userId")
+        listener.onCallEvent(CallEvent(callState, userId))
     }
 
     interface Listener {
@@ -25,8 +24,8 @@ class VoicePingBroadcastReceiver(private val listener: Listener) : BroadcastRece
 
     companion object {
         private const val INTENT_ACTION = "com.media2359.voiceping.intent.action.CALL_EVENT"
-        private const val KEY_CALL_TYPE = "call_type"
-        private const val KEY_CALL_EVENT = "call_event"
+        private const val KEY_CALL_STATE = "call_state"
+        private const val KEY_USER_ID = "user_id"
 
         fun generateIntentFilter(): IntentFilter {
             return IntentFilter(INTENT_ACTION)
