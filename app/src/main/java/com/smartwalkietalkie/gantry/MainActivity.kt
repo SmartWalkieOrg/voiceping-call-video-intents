@@ -64,6 +64,8 @@ class MainActivity : AppCompatActivity(), VoicePingBroadcastReceiver.Listener {
         binding.layoutCalling.visibility = if (layout == Layout.CALLING) View.VISIBLE else View.GONE
         binding.layoutIncomingCall.visibility =
             if (layout == Layout.INCOMING_CALL) View.VISIBLE else View.GONE
+        binding.layoutEstablishingCall.visibility =
+            if (layout == Layout.ESTABLISHING_CALL) View.VISIBLE else View.GONE
         binding.layoutCallEstablished.visibility =
             if (layout == Layout.CALL_ESTABLISHED) View.VISIBLE else View.GONE
     }
@@ -77,6 +79,7 @@ class MainActivity : AppCompatActivity(), VoicePingBroadcastReceiver.Listener {
             val layout = when (callEvent.state) {
                 CallEvent.State.CALL_INITIATED -> Layout.CALLING
                 CallEvent.State.CALL_RECEIVED -> Layout.INCOMING_CALL
+                CallEvent.State.CALL_ANSWERED -> Layout.ESTABLISHING_CALL
                 CallEvent.State.CALL_ESTABLISHED -> Layout.CALL_ESTABLISHED
                 else -> Layout.INIT_CALL
             }
@@ -88,6 +91,7 @@ class MainActivity : AppCompatActivity(), VoicePingBroadcastReceiver.Listener {
         INIT_CALL,
         CALLING,
         INCOMING_CALL,
+        ESTABLISHING_CALL,
         CALL_ESTABLISHED
     }
 }
