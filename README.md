@@ -14,25 +14,12 @@ Actions:
 
 Action: ```com.media2359.voiceping.intent.action.CALL_EVENT```
 
-Kinds:
+Call States:
 
-```
-private enum class Kind(val stringValue: String) {
-    OUTGOING("outgoing"),
-    INCOMING("incoming")
-}
-```
-
-Events:
-
-```
-enum class Event(val stringValue: String) {
-    CALL_INITIATED("call_initiated"),
-    CALL_RECEIVED("call_received"),
-    CALL_ANSWERED("call_answered"),
-    CALL_CANCELLED("call_cancelled"),
-    CALL_REJECTED("call_rejected"),
-    CALL_ESTABLISHED("call_established"),
-    CALL_ENDED("call_ended")
-}
-```
+- CALL_INITIATED = ```call_initiated```
+- CALL_RECEIVED = ```call_received```
+- CALL_ANSWERED = ```call_answered```
+- CALL_CANCELLED = ```call_cancelled```
+- CALL_REJECTED = ```call_rejected```
+- CALL_ESTABLISHED = ```call_established```
+- CALL_ENDED = ```call_ended```
