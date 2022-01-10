@@ -10,6 +10,7 @@ class VoicePingBroadcastReceiver(private val listener: Listener) : BroadcastRece
 
     override fun onReceive(context: Context?, intent: Intent?) {
         if (context == null || intent == null) return
+        Timber.d("onReceive, intent: $intent")
         if (intent.action != INTENT_ACTION) return
         val callType = intent.getStringExtra(KEY_CALL_TYPE) ?: ""
         val callState = intent.getStringExtra(KEY_CALL_EVENT) ?: ""

@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.smartwalkietalkie.gantry.databinding.ActivityMainBinding
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity(), VoicePingBroadcastReceiver.Listener {
     private lateinit var binding: ActivityMainBinding
@@ -13,6 +14,7 @@ class MainActivity : AppCompatActivity(), VoicePingBroadcastReceiver.Listener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Timber.d("onCreate")
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         vpReceiver = VoicePingBroadcastReceiver(this)
@@ -51,10 +53,12 @@ class MainActivity : AppCompatActivity(), VoicePingBroadcastReceiver.Listener {
 
     override fun onDestroy() {
         super.onDestroy()
+        Timber.d("onDestroy")
         unregisterReceiver(vpReceiver)
     }
 
     private fun showAppropriateLayout(layout: Layout) {
+        Timber.d("showAppropriateLayout: ${layout.name}")
         binding.layoutInitCall.visibility =
             if (layout == Layout.INIT_CALL) View.VISIBLE else View.GONE
         binding.layoutCalling.visibility = if (layout == Layout.CALLING) View.VISIBLE else View.GONE

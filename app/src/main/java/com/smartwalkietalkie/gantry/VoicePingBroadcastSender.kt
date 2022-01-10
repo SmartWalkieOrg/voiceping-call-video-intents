@@ -5,6 +5,7 @@ import android.content.Intent
 import timber.log.Timber
 
 class VoicePingBroadcastSender(private val context: Context) {
+    private val VP_PACKAGE_NAME = "com.media2359.voiceping"
 
     fun initiateCall(userId: Int) {
         val intent = Intent(INITIATE_CALL).apply {
