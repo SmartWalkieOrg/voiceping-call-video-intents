@@ -10,25 +10,39 @@ class VoicePingBroadcastReceiver(private val listener: Listener) : BroadcastRece
 
     override fun onReceive(context: Context?, intent: Intent?) {
         if (context == null || intent == null) return
-        if (intent.action != INTENT_ACTION) return
-        val callState = intent.getStringExtra(KEY_CALL_STATE) ?: ""
-        if (callState.isBlank()) return
-        val userId = intent.getIntExtra(KEY_USER_ID, 0)
-        Timber.d("onReceive, callState: $callState, userId: $userId")
-        listener.onCallEvent(CallEvent(callState, userId))
+        when (intent.action) {
+            ACTION_CONNECTION_EVENT -> {
+                val isConnected = intent.getBooleanExtra(KEY_IS_CONNECTED, false)
+                listener.onConnectionEvent(isConnected)
+            }
+            ACTION_CALL_EVENT -> {
+                val callState = intent.getStringExtra(KEY_CALL_STATE) ?: ""
+                if (callState.isBlank()) return
+                val userId = intent.getIntExtra(KEY_USER_ID, 0)
+                Timber.d("onReceive, callState: $callState, userId: $userId")
+                listener.onCallEvent(CallEvent(callState, userId))
+            }
+        }
     }
 
     interface Listener {
+        fun onConnectionEvent(isConnected: Boolean)
         fun onCallEvent(callEvent: CallEvent)
     }
 
     companion object {
-        private const val INTENT_ACTION = "com.media2359.voiceping.intent.action.CALL_EVENT"
+        private const val ACTION_CONNECTION_EVENT =
+            "com.media2359.voiceping.intent.action.CONNECTION_EVENT"
+        private const val ACTION_CALL_EVENT = "com.media2359.voiceping.intent.action.CALL_EVENT"
+        private const val KEY_IS_CONNECTED = "is_connected"
         private const val KEY_CALL_STATE = "call_state"
         private const val KEY_USER_ID = "user_id"
 
         fun generateIntentFilter(): IntentFilter {
-            return IntentFilter(INTENT_ACTION)
+            return IntentFilter().apply {
+                addAction(ACTION_CONNECTION_EVENT)
+                addAction(ACTION_CALL_EVENT)
+            }
         }
     }
 }

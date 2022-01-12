@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.smartwalkietalkie.gantry.databinding.ActivityMainBinding
 import timber.log.Timber
 
@@ -20,6 +21,7 @@ class MainActivity : AppCompatActivity(), VoicePingBroadcastReceiver.Listener {
         vpReceiver = VoicePingBroadcastReceiver(this)
         vpSender = VoicePingBroadcastSender(this)
         showAppropriateLayout(Layout.INIT_CALL, 0)
+        updateConnectionStatus(false)
         binding.buttonCall.setOnClickListener {
             val userId = binding.editUserId.text.toString()
             if (userId.isBlank()) {
@@ -86,8 +88,20 @@ class MainActivity : AppCompatActivity(), VoicePingBroadcastReceiver.Listener {
         }
     }
 
+    private fun updateConnectionStatus(isConnected: Boolean) {
+        binding.textConnectionStatus.text = if (isConnected) "CONNECTED" else "DISCONNECTED"
+        val colorResId = if (isConnected) R.color.green_500 else R.color.red_500
+        binding.textConnectionStatus.setTextColor(ContextCompat.getColor(this, colorResId))
+    }
+
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onConnectionEvent(isConnected: Boolean) {
+        runOnUiThread {
+            updateConnectionStatus(isConnected)
+        }
     }
 
     override fun onCallEvent(callEvent: CallEvent) {
