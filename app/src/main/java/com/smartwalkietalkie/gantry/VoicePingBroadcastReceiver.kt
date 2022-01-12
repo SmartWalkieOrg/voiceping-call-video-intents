@@ -13,6 +13,7 @@ class VoicePingBroadcastReceiver(private val listener: Listener) : BroadcastRece
         when (intent.action) {
             ACTION_CONNECTION_EVENT -> {
                 val isConnected = intent.getBooleanExtra(KEY_IS_CONNECTED, false)
+                Timber.d("onReceive, isConnected: $isConnected")
                 listener.onConnectionEvent(isConnected)
             }
             ACTION_CALL_EVENT -> {

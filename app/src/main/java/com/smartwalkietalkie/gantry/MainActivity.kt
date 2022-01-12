@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity(), VoicePingBroadcastReceiver.Listener {
             vpSender.endCall()
         }
         registerReceiver(vpReceiver, VoicePingBroadcastReceiver.generateIntentFilter())
+        vpSender.requestConnectionEvent()
     }
 
     override fun onDestroy() {

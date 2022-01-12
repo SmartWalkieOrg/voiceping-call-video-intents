@@ -5,7 +5,12 @@ import android.content.Intent
 import timber.log.Timber
 
 class VoicePingBroadcastSender(private val context: Context) {
-    private val VP_PACKAGE_NAME = "com.media2359.voiceping"
+
+    fun requestConnectionEvent() {
+        val intent = Intent(REQUEST_CONNECTION_EVENT)
+        Timber.d("requestConnectionEvent: $intent")
+        context.sendBroadcast(intent)
+    }
 
     fun initiateCall(userId: Int) {
         val intent = Intent(INITIATE_CALL).apply {
@@ -28,6 +33,8 @@ class VoicePingBroadcastSender(private val context: Context) {
     }
 
     companion object {
+        const val REQUEST_CONNECTION_EVENT =
+            "com.media2359.voiceping.intent.action.REQUEST_CONNECTION_EVENT"
         const val INITIATE_CALL = "com.media2359.voiceping.intent.action.INITIATE_CALL"
         const val ANSWER_CALL = "com.media2359.voiceping.intent.action.ANSWER_CALL"
         const val END_CALL = "com.media2359.voiceping.intent.action.END_CALL"
