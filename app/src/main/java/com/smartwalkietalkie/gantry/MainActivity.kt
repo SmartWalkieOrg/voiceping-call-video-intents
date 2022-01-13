@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity(), VoicePingBroadcastReceiver.Listener {
         setContentView(binding.root)
         vpReceiver = VoicePingBroadcastReceiver(this)
         vpSender = VoicePingBroadcastSender(this)
-        showAppropriateLayout(Layout.INIT_CALL, 0)
+        showAppropriateLayout(Layout.IDLE_CALL, 0)
         updateConnectionStatus(false)
         binding.buttonCall.setOnClickListener {
             val userId = binding.editUserId.text.toString()
@@ -39,15 +39,18 @@ class MainActivity : AppCompatActivity(), VoicePingBroadcastReceiver.Listener {
             vpSender.initiateCall(intUserId)
         }
         binding.buttonCancel.setOnClickListener {
+            showAppropriateLayout(Layout.IDLE_CALL, 0)
             vpSender.endCall()
         }
         binding.buttonAnswer.setOnClickListener {
             vpSender.answerCall()
         }
         binding.buttonReject.setOnClickListener {
+            showAppropriateLayout(Layout.IDLE_CALL, 0)
             vpSender.endCall()
         }
         binding.buttonEnd.setOnClickListener {
+            showAppropriateLayout(Layout.IDLE_CALL, 0)
             vpSender.endCall()
         }
         registerReceiver(vpReceiver, VoicePingBroadcastReceiver.generateIntentFilter())
@@ -62,14 +65,14 @@ class MainActivity : AppCompatActivity(), VoicePingBroadcastReceiver.Listener {
 
     private fun showAppropriateLayout(layout: Layout, userId: Int) {
         Timber.d("showAppropriateLayout: ${layout.name}")
-        if (layout == Layout.INIT_CALL) {
-            binding.layoutInitCall.visibility = View.VISIBLE
+        if (layout == Layout.IDLE_CALL) {
+            binding.layoutIdleCall.visibility = View.VISIBLE
             binding.layoutOnCall.visibility = View.GONE
         } else {
-            binding.layoutInitCall.visibility = View.GONE
+            binding.layoutIdleCall.visibility = View.GONE
             binding.layoutOnCall.visibility = View.VISIBLE
             binding.buttonCancel.visibility =
-                if (layout == Layout.CALLING) View.VISIBLE else View.GONE
+                if (layout == Layout.OUTGOING_CALL) View.VISIBLE else View.GONE
             binding.buttonAnswer.visibility =
                 if (layout == Layout.INCOMING_CALL) View.VISIBLE else View.GONE
             binding.buttonReject.visibility =
@@ -79,7 +82,7 @@ class MainActivity : AppCompatActivity(), VoicePingBroadcastReceiver.Listener {
             binding.buttonEnd.visibility =
                 if (layout == Layout.CALL_ESTABLISHED) View.VISIBLE else View.GONE
             binding.textStatus.text = when (layout) {
-                Layout.CALLING -> "Calling"
+                Layout.OUTGOING_CALL -> "Calling"
                 Layout.INCOMING_CALL -> "Incoming call"
                 Layout.ESTABLISHING_CALL -> "Establishing call..."
                 Layout.CALL_ESTABLISHED -> "Call established"
@@ -108,19 +111,19 @@ class MainActivity : AppCompatActivity(), VoicePingBroadcastReceiver.Listener {
     override fun onCallEvent(callEvent: CallEvent) {
         runOnUiThread {
             val layout = when (callEvent.state) {
-                CallEvent.State.CALL_INITIATED -> Layout.CALLING
+                CallEvent.State.CALL_INITIATED -> Layout.OUTGOING_CALL
                 CallEvent.State.CALL_RECEIVED -> Layout.INCOMING_CALL
                 CallEvent.State.CALL_ANSWERED -> Layout.ESTABLISHING_CALL
                 CallEvent.State.CALL_ESTABLISHED -> Layout.CALL_ESTABLISHED
-                else -> Layout.INIT_CALL
+                else -> Layout.IDLE_CALL
             }
             showAppropriateLayout(layout, callEvent.userId)
         }
     }
 
     enum class Layout {
-        INIT_CALL,
-        CALLING,
+        IDLE_CALL,
+        OUTGOING_CALL,
         INCOMING_CALL,
         ESTABLISHING_CALL,
         CALL_ESTABLISHED

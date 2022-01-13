@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:id="@+id/layout_init_call"
+        android:id="@+id/layout_idle_call"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
