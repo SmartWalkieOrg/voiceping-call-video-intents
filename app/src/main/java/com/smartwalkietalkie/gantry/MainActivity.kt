@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity(), VoicePingBroadcastReceiver.Listener {
             showAppropriateLayout(Layout.IDLE_CALL, 0)
             vpSender.endCall()
         }
+        binding.textAppVersion.text = getAppVersion()
         registerReceiver(vpReceiver, VoicePingBroadcastReceiver.generateIntentFilter())
         vpSender.requestConnectionEvent()
     }
@@ -100,6 +101,10 @@ class MainActivity : AppCompatActivity(), VoicePingBroadcastReceiver.Listener {
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    fun getAppVersion(): String {
+        return "${BuildConfig.VERSION_NAME}-${BuildConfig.VERSION_CODE}-${BuildConfig.GIT_HASH}-${BuildConfig.BUILD_TYPE}"
     }
 
     override fun onConnectionEvent(isConnected: Boolean) {

@@ -117,4 +117,18 @@
         android:text="Make sure you are logged in to VoicePing app first"
         android:textColor="@color/black" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/text_app_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:gravity="center_horizontal"
+        android:text="app version" />
+
 </LinearLayout>
