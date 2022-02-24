@@ -42,6 +42,15 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+    signingConfigs {
+        releaseConfig {
+            storeFile file("../store/key.jks")
+            storePassword "gantry"
+            keyAlias "gantry"
+            keyPassword "gantry"
+        }
+    }
 }
 
 dependencies {
