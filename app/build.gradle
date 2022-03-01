@@ -26,10 +26,20 @@ android {
         buildConfigField "String", "GIT_HASH", "\"${getGitHash()}\""
     }
 
+    signingConfigs {
+        releaseConfig {
+            storeFile file("../store/key.jks")
+            storePassword "gantry"
+            keyAlias "gantry"
+            keyPassword "gantry"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.releaseConfig
         }
     }
     compileOptions {
@@ -41,15 +51,6 @@ android {
     }
     buildFeatures {
         viewBinding true
-    }
-
-    signingConfigs {
-        releaseConfig {
-            storeFile file("../store/key.jks")
-            storePassword "gantry"
-            keyAlias "gantry"
-            keyPassword "gantry"
-        }
     }
 }
 
