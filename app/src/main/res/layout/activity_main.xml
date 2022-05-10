@@ -6,127 +6,143 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:id="@+id/layout_idle_call"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-        <EditText
-            android:id="@+id/edit_user_id"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="User ID" />
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/button_call"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Call" />
+            <LinearLayout
+                android:id="@+id/layout_idle_call"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-    </LinearLayout>
+                <EditText
+                    android:id="@+id/edit_user_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="User ID" />
 
-    <LinearLayout
-        android:id="@+id/layout_on_call"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:padding="16dp">
+                <Button
+                    android:id="@+id/button_call"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Call" />
 
-        <TextView
-            android:id="@+id/text_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Status"
-            android:textColor="@color/black"
-            android:textSize="24sp" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/text_user_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
-            android:text="User ID"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
+            <LinearLayout
+                android:id="@+id/layout_on_call"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-        <Button
-            android:id="@+id/button_cancel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Cancel" />
+                <TextView
+                    android:id="@+id/text_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Status"
+                    android:textColor="@color/black"
+                    android:textSize="24sp" />
 
-        <Button
-            android:id="@+id/button_answer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Answer" />
+                <TextView
+                    android:id="@+id/text_user_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="32dp"
+                    android:text="User ID"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/button_reject"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Reject" />
+                <Button
+                    android:id="@+id/button_cancel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Cancel" />
 
-        <ProgressBar
-            android:id="@+id/progress_circular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+                <Button
+                    android:id="@+id/button_answer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Answer" />
 
-        <Button
-            android:id="@+id/button_end"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="End" />
+                <Button
+                    android:id="@+id/button_reject"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Reject" />
 
-    </LinearLayout>
+                <ProgressBar
+                    android:id="@+id/progress_circular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
+                <Button
+                    android:id="@+id/button_end"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="End" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="VoicePing Connection Status"
-            android:textColor="@color/black" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/text_connection_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="CONNECTED"
-            android:textColor="@color/green_500"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
-    </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="VoicePing Connection Status"
+                    android:textColor="@color/black" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="32dp"
-        android:gravity="center_horizontal"
-        android:text="Make sure you are logged in to VoicePing app first"
-        android:textColor="@color/black" />
+                <TextView
+                    android:id="@+id/text_connection_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="CONNECTED"
+                    android:textColor="@color/green_500"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="16dp"
+                android:gravity="center_horizontal"
+                android:text="Make sure you are logged in to VoicePing app first"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="1dp"
+        android:background="@color/grey_100" />
 
     <TextView
         android:id="@+id/text_app_version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
         android:gravity="center_horizontal"
         android:text="app version" />
